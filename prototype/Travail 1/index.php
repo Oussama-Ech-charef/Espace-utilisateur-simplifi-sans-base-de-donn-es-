@@ -1,5 +1,100 @@
 
 
+<?php
+$name = "Guest";
+$color = "#ffffff";
+$lang = "fr";
+
+$currentDate = date("d/m/Y H:i:S");
+
+
+
+if(isset($_COOKIE["name_cookie"])) {
+    $name = $_COOKIE["name_cookie"];
+}
+
+if(isset($_COOKIE["color_cookie"])) {
+    $color = $_COOKIE["color_cookie"];
+}
+
+if(isset($_COOKIE["lang_cookie"])) {
+    $lang = $_COOKIE["lang_cookie"];
+}
+
+if(isset($_COOKIE["date_cookie"])) {
+    $currentDate = $_COOKIE["date_cookie"];
+}
+
+
+switch ($lang) {
+    case "en":
+            $welcome = "Welcome, ";
+            $Date = "Last update is:  ";
+            $labelName = "Name";
+            $labelLanguage = "Language";
+            $btnSave = "Save your choices";
+            $btnReset = "Reset all";
+            $labelColor = "Background color";
+    break;
+
+
+
+    case "fr":
+            $welcome = "Bienvenue, ";
+            $Date = "Derniére mise a jour :  ";
+            $labelName = "Nom";
+            $labelLanguage = "Langue";
+            $btnSave = "Enregistrer mes choix";
+            $btnReset = "Réinitialiiser tout";
+            $labelColor = "Couleur de fond";
+    break;
+}
+
+
+
+if($_SERVER["REQUEST_METHOD"] === "POST") {
+
+
+        if(!empty($_POST["name"])) {
+            $name = trim($_POST["name"]);
+            setcookie("name_cookie", $name, time() + 3600 * 24 * 30);
+        }
+
+        if(!empty($_POST["color"])) {
+            $color = $_POST["color"];
+            setcookie("color_cookie", $color, time() + 3600 * 24 * 30);
+        }
+
+        if(!empty($_POST["lang"])) {
+            $lang = $_POST["lang"];
+            setcookie("lang_cookie", $lang, time() + 3600 * 24 * 30);
+        }
+
+        $saveTime = date("d/m/Y H:i:s");
+        setcookie("date_cookie", $saveTime, time() + 3600 * 24 * 30);
+
+
+    header("Location: index.php");
+    exit();
+}
+
+
+
+if(isset($_GET["action"]) && $_GET["action"] === "reset") {
+
+
+        setcookie("name_cookie", "", time() - 3600);
+        setcookie("color_cookie", "", time() - 3600);
+        setcookie("lang_cookie", "", time() - 3600);
+        setcookie("date_cookie", "", time() - 3600);
+
+
+    header("Location: index.php");
+    exit();
+}
+
+?>
+
 
 
 
@@ -20,7 +115,7 @@
 
 
 <!DOCTYPE html>
-<html lang="<?php  echo $language; ?>">
+<html lang="<?php  echo $lang; ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -133,48 +228,51 @@
     <div class="container">
 
         <h1>
-             
+             <?php echo $welcome . htmlspecialchars($name); ?>
         </h1>
 
         <h3>
-            
+            <?php echo $Date . $currentDate; ?>
     </h3>
     
 
         <form method="post">
 
-            <label for="name"></label><br>
+            <label for="name"><?php echo $labelName; ?></label><br>
             <input type="text"  name="name"  id="name" required>
 
             
 
-            <label for="color"></label><br>
-            <input type="color" name="color" value="">
+            <label for="color"><?php echo $labelColor; ?></label><br>
+            <input type="color" name="color" value="<?php echo $color; ?>">
 
             
 
-            <label></label>
+            <label><?php echo $labelLanguage; ?></label>
             
             
 
             <select name="lang">
-                <option value="en">English</option>
-                <option value="fr">Francais</option>
+                <option value="en" <?php if($lang === "en") echo "selected"; ?>>English</option>
+                <option value="fr" <?php if($lang === "fr") echo "selected"; ?>>Francais</option>
             </select>
 
             
 
-            <input type="submit" value="">
+            <input type="submit" value="<?php echo $btnSave; ?>">
 
         </form>
 
         
 
         <a href="index.php?action=reset">
-           
+           <?php echo $btnReset; ?>
         </a>
 
     </div>
+
+
+    
 
 </body>
 </html>
