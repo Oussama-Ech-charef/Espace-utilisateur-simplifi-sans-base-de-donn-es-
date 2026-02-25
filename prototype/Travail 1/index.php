@@ -31,7 +31,7 @@ switch ($lang) {
             $welcome = "Welcome, ";
             $Date = "Last update is:  ";
             $labelName = "Name";
-            $labelLanguage = "Language";
+            $labelLang = "Language";
             $btnSave = "Save your choices";
             $btnReset = "Reset all";
             $labelColor = "Background color";
@@ -43,7 +43,7 @@ switch ($lang) {
             $welcome = "Bienvenue, ";
             $Date = "Derniére mise a jour :  ";
             $labelName = "Nom";
-            $labelLanguage = "Langue";
+            $labelLang = "Langue";
             $btnSave = "Enregistrer mes choix";
             $btnReset = "Réinitialiiser tout";
             $labelColor = "Couleur de fond";
@@ -248,7 +248,7 @@ if(isset($_GET["action"]) && $_GET["action"] === "reset") {
 
             
 
-            <label><?php echo $labelLanguage; ?></label>
+            <label><?php echo $labelLang; ?></label>
             
             
 
