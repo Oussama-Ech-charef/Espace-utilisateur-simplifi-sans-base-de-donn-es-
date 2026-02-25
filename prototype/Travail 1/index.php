@@ -31,7 +31,7 @@ switch ($lang) {
             $welcome = "Welcome, ";
             $Date = "Last update is:  ";
             $labelName = "Name";
-            $labelLang = "Language";
+            $labelLang= "Language";
             $btnSave = "Save your choices";
             $btnReset = "Reset all";
             $labelColor = "Background color";
